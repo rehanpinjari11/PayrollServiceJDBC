@@ -10,6 +10,7 @@ public class PayrollServiceJDBC {
         String user = "root";
         String password = "Rehan@123";
         String query = "select * from employee_payroll;";
+        String updateQuery = "Update employee_payroll SET basic_pay = 3000000.00 WHERE name = 'Terisa';";
 
         try {
 
@@ -30,6 +31,18 @@ public class PayrollServiceJDBC {
                 }
 
                 Statement statement = con.createStatement();
+
+                int rowAffected = statement.executeUpdate(updateQuery);
+
+                if (rowAffected > 0)
+                {
+                    System.out.println("Salary Updated Successfully for Terisa.");
+                }
+                else
+                {
+                    System.out.println("No Records Updated. Please check the Name 'Terisa' in the Database.");
+                }
+
                 ResultSet resultset = statement .executeQuery(query);
                 while (resultset.next())
                 {
