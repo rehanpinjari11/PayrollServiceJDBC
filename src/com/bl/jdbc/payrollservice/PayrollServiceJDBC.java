@@ -9,8 +9,8 @@ public class PayrollServiceJDBC {
         String url = "jdbc:mysql://localhost:3306/payroll_service";
         String user = "root";
         String password = "Rehan@123";
+        String updateQuery = "Update employee_payroll SET basic_pay = ? WHERE name = ?";
         String query = "select * from employee_payroll;";
-        String updateQuery = "Update employee_payroll SET basic_pay = 3000000.00 WHERE name = 'Terisa';";
 
         try {
 
@@ -30,18 +30,12 @@ public class PayrollServiceJDBC {
                     System.out.println("Registered JDBC Driver: " + d.getClass().getName());
                 }
 
-                Statement statement = con.createStatement();
+                PreparedStatement statement = con.prepareStatement(updateQuery);
 
-                int rowAffected = statement.executeUpdate(updateQuery);
-
-                if (rowAffected > 0)
-                {
-                    System.out.println("Salary Updated Successfully for Terisa.");
-                }
-                else
-                {
-                    System.out.println("No Records Updated. Please check the Name 'Terisa' in the Database.");
-                }
+                statement.setDouble(1, 3000000.00);
+                statement.setString(2, "Terisa");
+                statement.executeUpdate();
+                System.out.println("Updated");
 
                 ResultSet resultset = statement .executeQuery(query);
                 while (resultset.next())
