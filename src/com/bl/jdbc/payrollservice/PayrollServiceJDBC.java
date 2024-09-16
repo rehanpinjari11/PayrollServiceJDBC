@@ -9,8 +9,7 @@ public class PayrollServiceJDBC {
         String url = "jdbc:mysql://localhost:3306/payroll_service";
         String user = "root";
         String password = "Rehan@123";
-        String updateQuery = "Update employee_payroll SET basic_pay = ? WHERE name = ?";
-        String query = "select * from employee_payroll;";
+        String query = "select * from employee_payroll WHERE start_date BETWEEN CAST('2019-01-03' AS DATE) AND DATE (NOW());";
 
         try {
 
@@ -30,12 +29,7 @@ public class PayrollServiceJDBC {
                     System.out.println("Registered JDBC Driver: " + d.getClass().getName());
                 }
 
-                PreparedStatement statement = con.prepareStatement(updateQuery);
-
-                statement.setDouble(1, 3000000.00);
-                statement.setString(2, "Terisa");
-                statement.executeUpdate();
-                System.out.println("Updated");
+                Statement statement = con.createStatement();
 
                 ResultSet resultset = statement .executeQuery(query);
                 while (resultset.next())
